@@ -1,5 +1,5 @@
 export interface NewNote {
   id: Number;
-  title: String;
-  body: String;
+  title: string;
+  body: string;
 }
