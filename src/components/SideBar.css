@@ -1,0 +1,17 @@
+.sidebar {
+  height: 100vh;
+  /* background-color: blue; */
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.items {
+  padding: 15px;
+  border-radius: 0px 15px 15px 0px;
+}
+
+.items:hover {
+  background-color: #f1f3f4;
+  cursor: pointer;
+}
+/*# sourceMappingURL=SideBar.css.map */
