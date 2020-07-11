@@ -5,13 +5,13 @@ import { NotesGrid } from "./NotesGrid";
 interface Props {}
 export const ActiveNotes: React.FC<Props> = () => {
   return (
-    <>
-      <div className="createBox">
+    <div className="active-notes">
+      <div className="create-box">
         <CreateBox />
       </div>
       <div className="notes-grid">
         <NotesGrid />
       </div>
-    </>
+    </div>
   );
 };

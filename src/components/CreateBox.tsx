@@ -1,23 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "../ui-components/Modal";
+import { Form, Field } from "react-final-form";
 import "./CreateBox.scss";
-import { create } from "domain";
 interface Props {}
 export const CreateBox: React.FC<Props> = () => {
-  const createNote = () => {
-    console.log("note created");
+  const createNote = (values: any) => {
+    console.log(values);
+    hideModal();
   };
+
+  const [show, setShow] = useState(false);
+  const hideModal = () => {
+    setShow(false);
+  };
+
+  const showModal = () => {
+    setShow(true);
+  };
+
   return (
-    <div>
-      <Modal triggerName="Write a note">
-        <form onSubmit={createNote}>
-          <label htmlFor="note-title"> Note Title</label>
-          <input type="text" id="note-title" name="note-title" />
-          <label htmlFor="note-body">Note Body</label>
-          <input type="text" id="note-body" name="note-body" />
-          <input type="submit" value="create Note" />
-        </form>
+    <>
+      <Modal triggerName="Write a note" showModal={showModal} show={show}>
+        <Form
+          onSubmit={createNote}
+          render={({ handleSubmit }: any) => (
+            <form onSubmit={handleSubmit}>
+              <div>
+                <Field
+                  name="note-title"
+                  component="input"
+                  type="text"
+                  placeholder="Title"
+                />
+              </div>
+              <div>
+                <Field
+                  name="note-body"
+                  component="textarea"
+                  rows={25}
+                  type="text"
+                  placeholder="Title"
+                />
+              </div>
+              <button className="create-note-button" type="submit">
+                Create Note
+              </button>
+            </form>
+          )}
+        />
       </Modal>
-    </div>
+    </>
   );
 };

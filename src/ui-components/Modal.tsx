@@ -3,26 +3,24 @@ import { useState } from "react";
 import "./Modal.scss";
 interface Props {
   triggerName: string;
+  showModal: any;
+  show: boolean;
 }
-export const Modal: React.FC<Props> = ({ triggerName, children }) => {
-  const [show, setShow] = useState(false);
-  const hideModal = () => {
-    setShow(false);
-  };
-
-  const showModal = () => {
-    setShow(true);
-  };
-  const showHideClassName = show ? "display-block" : "display-none";
-
+export const Modal: React.FC<Props> = ({
+  showModal,
+  show,
+  triggerName,
+  children,
+}) => {
+  const conditionalShowHideClass = show ? "display-block" : "display-none";
+  const overlayClass = show ? "overlay" : "";
   return (
-    <div className="modal">
-      <button onClick={showModal}>{triggerName}</button>
-      <div className={showHideClassName}>
-        <section className="modal-main">
-          {children}
-          {/* <button onClick={hideModal}>close</button> */}
-        </section>
+    <div>
+      <button className="trigger-button" onClick={showModal}>
+        {triggerName}
+      </button>
+      <div className={conditionalShowHideClass + " " + overlayClass}>
+        <section className="modal-main">{children}</section>
       </div>
     </div>
   );

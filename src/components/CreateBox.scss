@@ -1,0 +1,48 @@
+form {
+  width: 100%;
+  height: 100%;
+  background: white;
+  //   margin: 10px auto;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 7px;
+
+  & > div {
+    display: flex;
+    flex-flow: row nowrap;
+    line-height: 2em;
+    margin: 5px;
+    & > label {
+      color: #333;
+      width: 110px;
+      font-size: 1em;
+      line-height: 32px;
+    }
+    & > input,
+    textarea {
+      flex: 1;
+      padding: 3px 5px;
+      font-size: 1em;
+      margin-left: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    & > div {
+      margin-left: 16px;
+      & > label {
+        display: block;
+        & > input,
+        textarea {
+          margin-right: 3px;
+        }
+      }
+    }
+  }
+  & > .buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    margin-top: 15px;
+  }
+}

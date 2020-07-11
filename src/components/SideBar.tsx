@@ -10,15 +10,13 @@ export const SideBar: React.FC<Props> = () => {
     history.push(sectionSelected);
   };
   return (
-    <SideBar>
-      <div className="sidebar">
-        <div className="items" data-section="active" onClick={selectionMade}>
-          Active Notes
-        </div>
-        <div className="items" data-section="archieved" onClick={selectionMade}>
-          Archieved Notes
-        </div>
+    <div className="sidebar">
+      <div className="items" data-section="active" onClick={selectionMade}>
+        Active Notes
       </div>
-    </SideBar>
+      <div className="items" data-section="archieved" onClick={selectionMade}>
+        Archieved Notes
+      </div>
+    </div>
   );
 };
