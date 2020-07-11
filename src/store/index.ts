@@ -1,7 +1,10 @@
 import { createStore, applyMiddleware, compose } from "redux";
+import createSagaMiddleware from "redux-saga";
 import { rootReducer } from "./appReducer";
 
 export type AppStore = ReturnType<typeof rootReducer>;
+
+const sagaMiddleware = createSagaMiddleware();
 
 // __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ is a field that is available on the window object only if
 // the redux devtools is installed. It is not a standard field - therefore, Typescript complains about it.
@@ -13,6 +16,9 @@ if (process.env.REACT_APP_BUILD_ENV === "production") {
   composeEnhancers = compose;
 }
 
-export const store = createStore(rootReducer);
+export const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(sagaMiddleware))
+);
 
 // sagaMiddleware.run(rootSaga);

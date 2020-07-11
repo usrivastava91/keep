@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Modal } from "../ui-components/Modal";
 import { Form, Field } from "react-final-form";
+import { useSelector, useDispatch } from "react-redux";
+import { CREATE_NOTE } from "../store/actions";
+import uuid from "../utils/uuid";
 import "./CreateBox.scss";
 interface Props {}
 export const CreateBox: React.FC<Props> = () => {
+  const dispatch = useDispatch();
   const createNote = (values: any) => {
     console.log(values);
+    const id = uuid();
+    const note = { ...values, id };
+    dispatch({ type: CREATE_NOTE, payload: note });
     hideModal();
   };
 
@@ -27,7 +34,7 @@ export const CreateBox: React.FC<Props> = () => {
             <form onSubmit={handleSubmit}>
               <div>
                 <Field
-                  name="note-title"
+                  name="title"
                   component="input"
                   type="text"
                   placeholder="Title"
@@ -35,7 +42,7 @@ export const CreateBox: React.FC<Props> = () => {
               </div>
               <div>
                 <Field
-                  name="note-body"
+                  name="body"
                   component="textarea"
                   rows={25}
                   type="text"
