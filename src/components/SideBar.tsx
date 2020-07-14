@@ -14,7 +14,7 @@ export const SideBar: React.FC<Props> = () => {
       <div className="items" data-section="active" onClick={selectionMade}>
         Active Notes
       </div>
-      <div className="items" data-section="archieved" onClick={selectionMade}>
+      <div className="items" data-section="archived" onClick={selectionMade}>
         Archived Notes
       </div>
     </div>

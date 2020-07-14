@@ -5,6 +5,9 @@ const activeNoteState: NewNote[] = [];
 const activeNotes = (state = activeNoteState, action: any): NewNote[] => {
   const { type, payload } = action;
   switch (type) {
+    // Manually updating the activeNotes state when a note is created, instead of doing it through the saga's
+    // response because indexedDB only returns the id of the object saved, and not the whole,
+    //  hence failing the NOTE_CREATED_SUCCESSFULLY action approach
     case actions.CREATE_NOTE: {
       const { body, id, title } = payload;
       const note = { body, id, title };
@@ -21,7 +24,21 @@ const activeNotes = (state = activeNoteState, action: any): NewNote[] => {
       return state;
   }
 };
-const appReducers = { activeNotes };
+
+const archivedNotesState: NewNote[] = [];
+const archivedNotes = (state = archivedNotesState, action: any): any => {
+  const { type, payload } = action;
+  switch (type) {
+    case actions.ARCHIVED_NOTES_RECIEVED: {
+      const { notes } = payload;
+      const newState = [...notes];
+      return newState;
+    }
+    default:
+      return state;
+  }
+};
+const appReducers = { activeNotes, archivedNotes };
 
 export const rootReducer = combineReducers({
   ...appReducers,
