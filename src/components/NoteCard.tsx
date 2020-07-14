@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./NoteCard.scss";
 interface Props {
-  title: string;
   body: string;
-  id: Number;
+  id: number;
+  title: string;
 }
 export const NoteCard: React.FC<Props> = (props: Props) => {
   const { id, title, body } = props;

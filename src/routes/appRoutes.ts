@@ -1,6 +1,6 @@
 import { IRoute } from "./Route";
 import { ActiveNotes } from "../components/ActiveNotes";
-import { ArchievedNotes } from "../components/ArchievedNotes";
+import { ArchivedNotes } from "../components/ArchivedNotes";
 import { SearchResults } from "../components/SearchResults";
 
 const ActiveNotesRoute: IRoute = {
@@ -8,9 +8,9 @@ const ActiveNotesRoute: IRoute = {
   component: ActiveNotes,
 };
 
-const ArchievedNotesRoute: IRoute = {
-  path: "/archieved",
-  component: ArchievedNotes,
+const ArchivedNotesRoute: IRoute = {
+  path: "/archived",
+  component: ArchivedNotes,
 };
 
 const SearchResultsRoute: IRoute = {
@@ -20,6 +20,6 @@ const SearchResultsRoute: IRoute = {
 
 export const appRoutes: IRoute[] = [
   ActiveNotesRoute,
-  ArchievedNotesRoute,
+  ArchivedNotesRoute,
   SearchResultsRoute,
 ];

@@ -1,5 +1,10 @@
 export interface NewNote {
-  id: Number;
+  id: number;
   title: string;
   body: string;
+}
+
+export interface Action {
+  type: string;
+  payload: any;
 }

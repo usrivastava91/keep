@@ -5,14 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { CREATE_NOTE } from "../store/actions";
 import uuid from "../utils/uuid";
 import "./CreateBox.scss";
+
 interface Props {}
 export const CreateBox: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const createNote = (values: any) => {
-    console.log(values);
-    const id = uuid();
-    const note = { ...values, id };
-    dispatch({ type: CREATE_NOTE, payload: note });
+    const note = { ...values };
+    dispatch({ type: CREATE_NOTE, payload: { ...note } });
     hideModal();
   };
 

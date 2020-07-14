@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { rootReducer } from "./appReducer";
+import { rootSaga } from "./appSagas";
 
 export type AppStore = ReturnType<typeof rootReducer>;
 
@@ -21,4 +22,4 @@ export const store = createStore(
   composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
-// sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
