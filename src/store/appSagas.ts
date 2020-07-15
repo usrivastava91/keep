@@ -23,6 +23,16 @@ function* createNote(action: Action) {
     });
 }
 
+function* watchUpdateNote() {
+  yield takeLatest(actions.CREATE_NOTE, updateNote);
+}
+
+function* updateNote(action: Action) {
+  const id = action.payload;
+
+  //TODO NEED THE TYPE OF NOTE. ARCHIVED, PINNED OR ACTIVE TO UPDATE FROM THE APPROPRIATE TABLE
+}
+
 function* watchGetActiveNotes() {
   yield takeEvery(actions.GET_ACTIVE_NOTES, getActiveNotes);
 }
@@ -50,14 +60,11 @@ function* archiveNote(action: Action) {
     db.table("archivedNotes")
       .add(note)
       .then((id) => {
+        db.table("activeNotes").delete(note.id);
         resolve(id);
       });
   });
-
-  db.table("activeNotes").delete(note.id);
-
   const archivedNoteId = yield promise;
-
   //TODO: Figure out a way to remove the archived note from the activeNotes state. so wont have to make db call again
   yield put(actions.getActiveNotes()); //To rerender the active notes section on archiving a note
 }
@@ -79,11 +86,48 @@ function* getArchivedNotes(action: Action) {
   yield put(actions.archivedNotesRecieved(notes));
 }
 
+function* watchPinNote() {
+  yield takeLatest(actions.PIN_NOTE, pinNote);
+}
+
+function* pinNote(action: Action) {
+  const note = action.payload;
+
+  const promise = new Promise((resolve, reject) => {
+    db.table("pinnedNotes")
+      .add(note)
+      .then((id) => {
+        db.table("activeNotes").delete(note.id);
+        resolve(id);
+      });
+  });
+  const pinnedNotes = yield promise;
+  yield put(actions.getActiveNotes()); //To rerender the active notes section on pinning a note
+}
+
+function* watchGetPinnedNotes() {
+  yield takeEvery(actions.GET_PINNED_NOTES, getPinnedNotes);
+}
+
+function* getPinnedNotes() {
+  const promise = new Promise((resolve, reject) => {
+    db.table("pinnedNotes")
+      .toArray()
+      .then((notes) => {
+        resolve(notes);
+      });
+  });
+  debugger;
+  const notes = yield promise;
+  yield put(actions.pinnedNotesRecieved(notes));
+}
 const appSagas = [
   watchCreateNote(),
   watchGetActiveNotes(),
   watchArchiveNote(),
   watchGetArchivedNotes(),
+  watchPinNote(),
+  watchGetPinnedNotes(),
 ];
 
 export function* rootSaga() {

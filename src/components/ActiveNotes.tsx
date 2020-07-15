@@ -4,6 +4,7 @@ import "./ActiveNotes.scss";
 import { NotesGrid } from "./NotesGrid";
 import { useSelector, useDispatch } from "react-redux";
 import { NewNote } from "../types";
+import { PinnedNotes } from "./PinnedNotes";
 
 interface Props {}
 export const ActiveNotes: React.FC<Props> = () => {
@@ -22,6 +23,7 @@ export const ActiveNotes: React.FC<Props> = () => {
         <CreateBox />
       </div>
       <div className="grid-section">
+        <PinnedNotes />
         <NotesGrid showNoteActions={true} notes={activeNotes} />
       </div>
     </div>

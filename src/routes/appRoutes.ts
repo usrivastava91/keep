@@ -2,7 +2,7 @@ import { IRoute } from "./Route";
 import { ActiveNotes } from "../components/ActiveNotes";
 import { ArchivedNotes } from "../components/ArchivedNotes";
 import { SearchResults } from "../components/SearchResults";
-
+import { Note } from "../components/Note";
 const ActiveNotesRoute: IRoute = {
   path: "/active",
   component: ActiveNotes,
@@ -18,8 +18,13 @@ const SearchResultsRoute: IRoute = {
   component: SearchResults,
 };
 
+const NoteRoute: IRoute = {
+  path: "/note/:id/:title/:body",
+  component: Note,
+};
 export const appRoutes: IRoute[] = [
   ActiveNotesRoute,
   ArchivedNotesRoute,
   SearchResultsRoute,
+  NoteRoute,
 ];

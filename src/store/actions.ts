@@ -6,11 +6,21 @@ export const ACTIVE_NOTES_RECIEVED = "ACTIVE_NOTES_RECIEVED";
 export const ARCHIVE_NOTE = "ARCHIVE_NOTE";
 export const GET_ARCHIVED_NOTES = "GET_ARCHIVED_NOTES";
 export const ARCHIVED_NOTES_RECIEVED = "ARCHIVED_NOTES_RECIEVED";
-
+export const PIN_NOTE = "PIN_NOTE";
+export const GET_PINNED_NOTES = "GET_PINNED_NOTES";
+export const PINNED_NOTES_RECIEVED = "PINNED_NOTES_RECIEVED";
+export const UPDATE_NOTE = "UDPATE_NOTE";
 interface CreateNote {
   type: typeof CREATE_NOTE;
   payload: {
     newNote: {};
+  };
+}
+
+interface UpdateNote {
+  type: typeof UPDATE_NOTE;
+  payload: {
+    id: number;
   };
 }
 
@@ -44,13 +54,36 @@ interface ArchivedNotesRecieved {
     notes: NewNote[];
   };
 }
+
+interface PinNote {
+  type: typeof PIN_NOTE;
+  payload: {
+    newNote: {};
+  };
+}
+
+interface GetPinnedNotes {
+  type: typeof GET_PINNED_NOTES;
+  payload: {};
+}
+
+interface PinnedNotesRecieved {
+  type: typeof PINNED_NOTES_RECIEVED;
+  payload: {
+    notes: NewNote[];
+  };
+}
 export type Actions =
   | CreateNote
+  | UpdateNote
   | GetActiveNotes
   | ActiveNotesRecieved
   | ArchiveNote
   | GetArchivedNotes
-  | ArchivedNotesRecieved;
+  | ArchivedNotesRecieved
+  | PinNote
+  | GetPinnedNotes
+  | PinnedNotesRecieved;
 
 export function createNote(newNote: NewNote): Actions {
   return {
@@ -61,6 +94,14 @@ export function createNote(newNote: NewNote): Actions {
   };
 }
 
+export function updateNote(id: number): Actions {
+  return {
+    type: UPDATE_NOTE,
+    payload: {
+      id,
+    },
+  };
+}
 export function getActiveNotes(): Actions {
   return {
     type: GET_ACTIVE_NOTES,
@@ -96,6 +137,31 @@ export function getArchivedNotes(): Actions {
 export function archivedNotesRecieved(notes: NewNote[]): Actions {
   return {
     type: ARCHIVED_NOTES_RECIEVED,
+    payload: {
+      notes,
+    },
+  };
+}
+
+export function pinNote(newNote: NewNote): Actions {
+  return {
+    type: PIN_NOTE,
+    payload: {
+      newNote,
+    },
+  };
+}
+
+export function getPinnedNotes(): Actions {
+  return {
+    type: GET_PINNED_NOTES,
+    payload: {},
+  };
+}
+
+export function pinnedNotesRecieved(notes: NewNote[]): Actions {
+  return {
+    type: PINNED_NOTES_RECIEVED,
     payload: {
       notes,
     },
