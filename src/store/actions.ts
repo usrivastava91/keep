@@ -10,6 +10,9 @@ export const PIN_NOTE = "PIN_NOTE";
 export const GET_PINNED_NOTES = "GET_PINNED_NOTES";
 export const PINNED_NOTES_RECIEVED = "PINNED_NOTES_RECIEVED";
 export const UPDATE_NOTE = "UDPATE_NOTE";
+export const SEARCH = "SEARCH";
+export const SEARCH_DATA_COLLATED = "SEARCH_DATA_COLLATED";
+
 interface CreateNote {
   type: typeof CREATE_NOTE;
   payload: {
@@ -73,6 +76,22 @@ interface PinnedNotesRecieved {
     notes: NewNote[];
   };
 }
+
+interface Search {
+  type: typeof SEARCH;
+  payload: {
+    query: string;
+  };
+}
+
+interface SearchDataCollated {
+  type: typeof SEARCH_DATA_COLLATED;
+  payload: {
+    allNotes: NewNote[];
+    query: string;
+  };
+}
+
 export type Actions =
   | CreateNote
   | UpdateNote
@@ -83,7 +102,9 @@ export type Actions =
   | ArchivedNotesRecieved
   | PinNote
   | GetPinnedNotes
-  | PinnedNotesRecieved;
+  | PinnedNotesRecieved
+  | Search
+  | SearchDataCollated;
 
 export function createNote(newNote: NewNote): Actions {
   return {
@@ -164,6 +185,25 @@ export function pinnedNotesRecieved(notes: NewNote[]): Actions {
     type: PINNED_NOTES_RECIEVED,
     payload: {
       notes,
+    },
+  };
+}
+
+export function search(query: string): Actions {
+  return {
+    type: SEARCH,
+    payload: {
+      query,
+    },
+  };
+}
+
+export function searchDataCollatd(allNotes: NewNote[], query: string): Actions {
+  return {
+    type: SEARCH_DATA_COLLATED,
+    payload: {
+      allNotes,
+      query,
     },
   };
 }

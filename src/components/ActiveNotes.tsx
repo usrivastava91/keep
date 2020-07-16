@@ -12,11 +12,17 @@ export const ActiveNotes: React.FC<Props> = () => {
   useEffect(() => {
     console.log("reloaded");
     dispatch({ type: "GET_ACTIVE_NOTES", payload: {} });
+    dispatch({ type: "GET_ARCHIVED_NOTES", payload: {} }); //Need to get the archived notes to have them available in the state for search( bad design regret :\ )
   }, []);
 
   const activeNotes = useSelector((state: any) => {
     return state.activeNotes;
   });
+  const searchResults = useSelector((state: any) => {
+    return state.searchResults;
+  });
+
+  console.log("SEARCH", searchResults);
   return (
     <div className="active-notes">
       <div className="create-box">

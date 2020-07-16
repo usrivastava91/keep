@@ -15,7 +15,6 @@ const activeNotes = (state = activeNoteState, action: any): NewNote[] => {
       return newState;
     }
     case actions.ACTIVE_NOTES_RECIEVED: {
-      console.log(payload);
       const { notes } = payload;
       const newState = [...notes];
       return newState;
@@ -26,7 +25,7 @@ const activeNotes = (state = activeNoteState, action: any): NewNote[] => {
 };
 
 const archivedNotesState: NewNote[] = [];
-const archivedNotes = (state = archivedNotesState, action: any): any => {
+const archivedNotes = (state = archivedNotesState, action: any): NewNote[] => {
   const { type, payload } = action;
   switch (type) {
     case actions.ARCHIVED_NOTES_RECIEVED: {
@@ -40,7 +39,7 @@ const archivedNotes = (state = archivedNotesState, action: any): any => {
 };
 
 const pinnedNotesState: NewNote[] = [];
-const pinnedNotes = (state = pinnedNotesState, action: any): any => {
+const pinnedNotes = (state = pinnedNotesState, action: any): NewNote[] => {
   const { type, payload } = action;
   switch (type) {
     //Manually updating the pinned note state when a note is created for the same reason
@@ -61,7 +60,28 @@ const pinnedNotes = (state = pinnedNotesState, action: any): any => {
       return state;
   }
 };
-const appReducers = { activeNotes, archivedNotes, pinnedNotes };
+
+const searchResultState: NewNote[] = [];
+const searchResults = (state = searchResultState, action: any): any => {
+  const { type, payload } = action;
+  switch (type) {
+    case actions.SEARCH_DATA_COLLATED: {
+      const { allNotes, query } = payload;
+      const searchResult = allNotes.filter((note: NewNote) => {
+        return (
+          note.body.toLowerCase().includes(query.toLowerCase()) ||
+          note.title.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      const newState = [...searchResult];
+      return newState;
+    }
+
+    default:
+      return state;
+  }
+};
+const appReducers = { activeNotes, archivedNotes, pinnedNotes, searchResults };
 
 export const rootReducer = combineReducers({
   ...appReducers,

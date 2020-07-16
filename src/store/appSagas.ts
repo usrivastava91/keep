@@ -17,7 +17,6 @@ function* watchCreateNote() {
 
 function* createNote(action: Action) {
   const note = action.payload;
-  debugger;
   const promise = new Promise((resolve, reject) => {
     db.table("activeNotes")
       .add(note)
@@ -132,6 +131,22 @@ function* getPinnedNotes() {
   const notes = yield promise;
   yield put(actions.pinnedNotesRecieved(notes));
 }
+
+function* watchSearch() {
+  yield takeLatest(actions.SEARCH, search);
+}
+
+function* search(action: Action) {
+  const query = action.payload;
+  const allNotesFromState = (state: any) => [
+    ...state.activeNotes,
+    ...state.archivedNotes,
+    ...state.pinnedNotes,
+  ];
+  let allNotes = yield select(allNotesFromState);
+  yield put(actions.searchDataCollatd(allNotes, query));
+}
+
 const appSagas = [
   watchCreateNote(),
   watchGetActiveNotes(),
@@ -140,6 +155,7 @@ const appSagas = [
   watchPinNote(),
   watchGetPinnedNotes(),
   watchUpdateNote(),
+  watchSearch(),
 ];
 
 export function* rootSaga() {
