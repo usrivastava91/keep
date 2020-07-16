@@ -4,10 +4,12 @@ import { Modal } from "../ui-components/Modal";
 import { Form, Field } from "react-final-form";
 import "./NotesGrid.scss";
 import { useParams, useHistory } from "react-router-dom";
+import { UPDATE_NOTE } from "../store/actions";
 interface Props {}
 export const Note: React.FC<Props> = (props: Props) => {
-  const { id, title, body } = useParams();
+  const { id, title, body, type } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const hideModal = () => {
     setShow(false);
@@ -16,8 +18,14 @@ export const Note: React.FC<Props> = (props: Props) => {
   const showModal = () => {
     setShow(true);
   };
-  const editNote = () => {
-    history.replace("/active");
+  const editNote = (values: any) => {
+    const updatedNote = { ...values, id, type };
+    dispatch({ type: UPDATE_NOTE, payload: { updatedNote } });
+    if (type === "archivedNotes") {
+      history.replace("/archived");
+    } else {
+      history.replace("/active");
+    }
   };
   return (
     <div className="note">

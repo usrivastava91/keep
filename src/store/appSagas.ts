@@ -10,27 +10,39 @@ import { all } from "redux-saga/effects";
 import * as actions from "./actions";
 import db from "../utils/DBConfig";
 import { Action } from "../types";
+
 function* watchCreateNote() {
   yield takeLatest(actions.CREATE_NOTE, createNote);
 }
 
 function* createNote(action: Action) {
   const note = action.payload;
-  db.table("activeNotes")
-    .add(note)
-    .then((id) => {
-      console.log("NOTE SAVED", id);
-    });
+  debugger;
+  const promise = new Promise((resolve, reject) => {
+    db.table("activeNotes")
+      .add(note)
+      .then((id) => {
+        resolve(id);
+      });
+  });
+
+  const id = yield promise;
+  // db.table("activeNotes")
+  //   .add(note)
+  //   .then((id) => {
+  //     console.log("NOTE SAVED", id);
+  //     note = {...action.payload, id}
+  //   });
 }
 
 function* watchUpdateNote() {
-  yield takeLatest(actions.CREATE_NOTE, updateNote);
+  yield takeLatest(actions.UPDATE_NOTE, updateNote);
 }
 
 function* updateNote(action: Action) {
-  const id = action.payload;
-
-  //TODO NEED THE TYPE OF NOTE. ARCHIVED, PINNED OR ACTIVE TO UPDATE FROM THE APPROPRIATE TABLE
+  const { updatedNote } = action.payload;
+  const { id, type, body, title } = updatedNote;
+  db.table(type).update(id, { body, title, type });
 }
 
 function* watchGetActiveNotes() {
@@ -117,7 +129,6 @@ function* getPinnedNotes() {
         resolve(notes);
       });
   });
-  debugger;
   const notes = yield promise;
   yield put(actions.pinnedNotesRecieved(notes));
 }
@@ -128,6 +139,7 @@ const appSagas = [
   watchGetArchivedNotes(),
   watchPinNote(),
   watchGetPinnedNotes(),
+  watchUpdateNote(),
 ];
 
 export function* rootSaga() {

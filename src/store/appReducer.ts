@@ -9,8 +9,8 @@ const activeNotes = (state = activeNoteState, action: any): NewNote[] => {
     // response because indexedDB only returns the id of the object saved, and not the whole,
     //  hence failing the NOTE_CREATED_SUCCESSFULLY action approach
     case actions.CREATE_NOTE: {
-      const { body, id, title } = payload;
-      const note = { body, id, title };
+      const { body, id, title, type } = payload;
+      const note = { body, id, title, type };
       const newState = [...state, note];
       return newState;
     }
@@ -46,8 +46,8 @@ const pinnedNotes = (state = pinnedNotesState, action: any): any => {
     //Manually updating the pinned note state when a note is created for the same reason
     // I had to update the state manually on note creation
     case actions.PIN_NOTE: {
-      const { body, id, title } = payload;
-      const note = { body, id, title };
+      const { body, id, title, type } = payload;
+      const note = { body, id, title, type };
       const newState = [...state, note];
       return newState;
     }

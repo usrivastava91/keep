@@ -19,7 +19,7 @@ const SearchResultsRoute: IRoute = {
 };
 
 const NoteRoute: IRoute = {
-  path: "/note/:id/:title/:body",
+  path: "/note/:id/:title/:body/:type",
   component: Note,
 };
 export const appRoutes: IRoute[] = [

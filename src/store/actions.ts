@@ -20,7 +20,7 @@ interface CreateNote {
 interface UpdateNote {
   type: typeof UPDATE_NOTE;
   payload: {
-    id: number;
+    updatedNote: NewNote;
   };
 }
 
@@ -94,11 +94,11 @@ export function createNote(newNote: NewNote): Actions {
   };
 }
 
-export function updateNote(id: number): Actions {
+export function updateNote(updatedNote: NewNote): Actions {
   return {
     type: UPDATE_NOTE,
     payload: {
-      id,
+      updatedNote,
     },
   };
 }

@@ -10,7 +10,8 @@ interface Props {}
 export const CreateBox: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const createNote = (values: any) => {
-    const note = { ...values };
+    const id = uuid();
+    const note = { ...values, type: "activeNotes", id };
     dispatch({ type: CREATE_NOTE, payload: { ...note } });
     hideModal();
   };

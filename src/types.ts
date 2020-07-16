@@ -1,7 +1,8 @@
 export interface NewNote {
-  id: number;
+  id: string;
   title: string;
   body: string;
+  type: string;
 }
 
 export interface Action {

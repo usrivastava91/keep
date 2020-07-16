@@ -3,29 +3,35 @@ import "./NoteCard.scss";
 import { NewNote } from "../types";
 import { useSelector, useDispatch } from "react-redux";
 import { ARCHIVE_NOTE, PIN_NOTE } from "../store/actions";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 interface Props {
   note: NewNote;
   showNoteActions: boolean;
 }
 export const NoteCard: React.FC<Props> = (props: Props) => {
   const { note, showNoteActions } = props;
-  const { id, body, title } = note;
+  const { id, body, title, type } = note;
   const dispatch = useDispatch();
   const history = useHistory();
+  // let location = useLocation();
+  // const type = location.pathname.substr(1);
+
   const archiveNote = (e: any) => {
     e.stopPropagation();
-    console.log("archive");
-    dispatch({ type: ARCHIVE_NOTE, payload: note });
+    const archivedNote = { ...note, type: "archivedNotes" };
+    dispatch({ type: ARCHIVE_NOTE, payload: archivedNote });
   };
 
   const pinNote = (e: any) => {
     e.stopPropagation();
-    dispatch({ type: PIN_NOTE, payload: note });
+    const pinnedNote = { ...note, type: "pinnedNotes" };
+    dispatch({ type: PIN_NOTE, payload: pinnedNote });
   };
 
   const showNote = () => {
-    history.push(`note/${id}/${encodeURI(title)}/${encodeURI(body)}`);
+    history.push(
+      `note/${id}/${encodeURI(title)}/${encodeURI(body)}/${encodeURI(type)}`
+    );
   };
 
   const summary = body != undefined ? body.substring(0, 50) + "..." : "";
