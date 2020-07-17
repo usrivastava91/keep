@@ -12,7 +12,7 @@ export const PINNED_NOTES_RECIEVED = "PINNED_NOTES_RECIEVED";
 export const UPDATE_NOTE = "UDPATE_NOTE";
 export const SEARCH = "SEARCH";
 export const SEARCH_DATA_COLLATED = "SEARCH_DATA_COLLATED";
-
+export const SHOW_SEARCH_RESULTS = "SHOW_SEARCH_RESULTS";
 interface CreateNote {
   type: typeof CREATE_NOTE;
   payload: {
@@ -92,6 +92,13 @@ interface SearchDataCollated {
   };
 }
 
+interface ShowSearchResults {
+  type: typeof SHOW_SEARCH_RESULTS;
+  payload: {
+    showSearchResults: boolean;
+  };
+}
+
 export type Actions =
   | CreateNote
   | UpdateNote
@@ -104,7 +111,8 @@ export type Actions =
   | GetPinnedNotes
   | PinnedNotesRecieved
   | Search
-  | SearchDataCollated;
+  | SearchDataCollated
+  | ShowSearchResults;
 
 export function createNote(newNote: NewNote): Actions {
   return {
@@ -204,6 +212,15 @@ export function searchDataCollatd(allNotes: NewNote[], query: string): Actions {
     payload: {
       allNotes,
       query,
+    },
+  };
+}
+
+export function showSearchResults(showSearchResults: boolean): Actions {
+  return {
+    type: SHOW_SEARCH_RESULTS,
+    payload: {
+      showSearchResults,
     },
   };
 }

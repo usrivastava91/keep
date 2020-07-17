@@ -61,8 +61,11 @@ const pinnedNotes = (state = pinnedNotesState, action: any): NewNote[] => {
   }
 };
 
-const searchResultState: NewNote[] = [];
-const searchResults = (state = searchResultState, action: any): any => {
+const searchState: { showSearchResults: boolean; searchResults: NewNote[] } = {
+  showSearchResults: false,
+  searchResults: [],
+};
+const search = (state = searchState, action: any): any => {
   const { type, payload } = action;
   switch (type) {
     case actions.SEARCH_DATA_COLLATED: {
@@ -73,15 +76,22 @@ const searchResults = (state = searchResultState, action: any): any => {
           note.title.toLowerCase().includes(query.toLowerCase())
         );
       });
-      const newState = [...searchResult];
+      const newState = {
+        searchResults: [...searchResult],
+        showSearchResults: state.showSearchResults,
+      };
       return newState;
     }
 
+    case actions.SHOW_SEARCH_RESULTS: {
+      const showSearchResults = payload;
+      return { showSearchResults, searchResults: state.searchResults };
+    }
     default:
       return state;
   }
 };
-const appReducers = { activeNotes, archivedNotes, pinnedNotes, searchResults };
+const appReducers = { activeNotes, archivedNotes, pinnedNotes, search };
 
 export const rootReducer = combineReducers({
   ...appReducers,

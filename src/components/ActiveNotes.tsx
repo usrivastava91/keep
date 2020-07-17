@@ -19,10 +19,15 @@ export const ActiveNotes: React.FC<Props> = () => {
     return state.activeNotes;
   });
   const searchResults = useSelector((state: any) => {
-    return state.searchResults;
+    return state.search.searchResults;
+  });
+  const showSearchResults = useSelector((state: any) => {
+    return state.search.showSearchResults;
+  });
+  const activeNotesSearchResults = searchResults.filter((result: NewNote) => {
+    return result.type === "activeNotes";
   });
 
-  console.log("SEARCH", searchResults);
   return (
     <div className="active-notes">
       <div className="create-box">
@@ -30,7 +35,12 @@ export const ActiveNotes: React.FC<Props> = () => {
       </div>
       <div className="grid-section">
         <PinnedNotes />
-        <NotesGrid showNoteActions={true} notes={activeNotes} />
+        <NotesGrid
+          showNoteActions={true}
+          notes={
+            showSearchResults === true ? activeNotesSearchResults : activeNotes
+          }
+        />
       </div>
     </div>
   );
