@@ -1,6 +1,6 @@
 .create-box {
-  height: 20%;
-  background-color: blue;
+  height: 20% !important;
+  // background-color: blue;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,13 +8,12 @@
 
 .grid-section {
   height: 80%;
-  background-color: red;
+  // background-color: red;
 }
 
 .active-notes {
-  display: block;
-  border: 2px solid black;
-  width: 100%;
+  // display: block;
+  // width: 100%;
 }
 
 .overlay {

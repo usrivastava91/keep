@@ -26,12 +26,6 @@ function* createNote(action: Action) {
   });
 
   const id = yield promise;
-  // db.table("activeNotes")
-  //   .add(note)
-  //   .then((id) => {
-  //     console.log("NOTE SAVED", id);
-  //     note = {...action.payload, id}
-  //   });
 }
 
 function* watchUpdateNote() {
@@ -42,6 +36,28 @@ function* updateNote(action: Action) {
   const { updatedNote } = action.payload;
   const { id, type, body, title } = updatedNote;
   db.table(type).update(id, { body, title, type });
+}
+
+function* watchDeleteNote() {
+  yield takeLatest(actions.DELETE_NOTE, deleteNote);
+}
+
+function* deleteNote(action: Action) {
+  const { deletedNote } = action.payload;
+  const { id, type } = deletedNote;
+
+  const promise = new Promise((resolve, reject) => {
+    db.table(type)
+      .delete(id)
+      .then((id) => {
+        resolve(id);
+      });
+  });
+
+  const deletedId = yield promise;
+  if (type === "archivedNotes") yield put(actions.getArchivedNotes());
+  else if (type === "activeNotes") yield put(actions.getActiveNotes());
+  else if (type === "pinnedNotes") yield put(actions.getPinnedNotes());
 }
 
 function* watchGetActiveNotes() {
@@ -77,7 +93,11 @@ function* archiveNote(action: Action) {
   });
   const archivedNoteId = yield promise;
   //TODO: Figure out a way to remove the archived note from the activeNotes state. so wont have to make db call again
-  yield put(actions.getActiveNotes()); //To rerender the active notes section on archiving a note
+  //To rerender the active notes section on archiving a note
+
+  //TODO FIX ARCHIVE IN PINNED NOTE BUG
+  yield put(actions.getPinnedNotes());
+  yield put(actions.getActiveNotes());
 }
 
 function* watchGetArchivedNotes() {
@@ -121,6 +141,7 @@ function* watchGetPinnedNotes() {
 }
 
 function* getPinnedNotes() {
+  debugger;
   const promise = new Promise((resolve, reject) => {
     db.table("pinnedNotes")
       .toArray()
@@ -144,12 +165,13 @@ function* search(action: Action) {
     ...state.pinnedNotes,
   ];
   let allNotes = yield select(allNotesFromState);
-  yield put(actions.searchDataCollatd(allNotes, query));
+  yield put(actions.searchDataCollated(allNotes, query));
 }
 
 const appSagas = [
   watchCreateNote(),
   watchGetActiveNotes(),
+  watchDeleteNote(),
   watchArchiveNote(),
   watchGetArchivedNotes(),
   watchPinNote(),

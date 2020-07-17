@@ -10,9 +10,12 @@ export const PIN_NOTE = "PIN_NOTE";
 export const GET_PINNED_NOTES = "GET_PINNED_NOTES";
 export const PINNED_NOTES_RECIEVED = "PINNED_NOTES_RECIEVED";
 export const UPDATE_NOTE = "UDPATE_NOTE";
+export const DELETE_NOTE = "DELETE_NOTE";
 export const SEARCH = "SEARCH";
 export const SEARCH_DATA_COLLATED = "SEARCH_DATA_COLLATED";
 export const SHOW_SEARCH_RESULTS = "SHOW_SEARCH_RESULTS";
+
+export const SHOW_SIDE_BAR = "SHOW_SIDE_BAR";
 interface CreateNote {
   type: typeof CREATE_NOTE;
   payload: {
@@ -24,6 +27,13 @@ interface UpdateNote {
   type: typeof UPDATE_NOTE;
   payload: {
     updatedNote: NewNote;
+  };
+}
+
+interface DeleteNote {
+  type: typeof DELETE_NOTE;
+  payload: {
+    deletedNote: NewNote;
   };
 }
 
@@ -99,6 +109,12 @@ interface ShowSearchResults {
   };
 }
 
+interface ShowSideBar {
+  type: typeof SHOW_SIDE_BAR;
+  payload: {
+    showSideBar: boolean;
+  };
+}
 export type Actions =
   | CreateNote
   | UpdateNote
@@ -112,7 +128,9 @@ export type Actions =
   | PinnedNotesRecieved
   | Search
   | SearchDataCollated
-  | ShowSearchResults;
+  | ShowSearchResults
+  | ShowSideBar
+  | DeleteNote;
 
 export function createNote(newNote: NewNote): Actions {
   return {
@@ -128,6 +146,15 @@ export function updateNote(updatedNote: NewNote): Actions {
     type: UPDATE_NOTE,
     payload: {
       updatedNote,
+    },
+  };
+}
+
+export function deleteNote(deletedNote: NewNote): Actions {
+  return {
+    type: DELETE_NOTE,
+    payload: {
+      deletedNote,
     },
   };
 }
@@ -206,7 +233,10 @@ export function search(query: string): Actions {
   };
 }
 
-export function searchDataCollatd(allNotes: NewNote[], query: string): Actions {
+export function searchDataCollated(
+  allNotes: NewNote[],
+  query: string
+): Actions {
   return {
     type: SEARCH_DATA_COLLATED,
     payload: {
@@ -221,6 +251,15 @@ export function showSearchResults(showSearchResults: boolean): Actions {
     type: SHOW_SEARCH_RESULTS,
     payload: {
       showSearchResults,
+    },
+  };
+}
+
+export function showSideBar(showSideBar: boolean): Actions {
+  return {
+    type: SHOW_SIDE_BAR,
+    payload: {
+      showSideBar,
     },
   };
 }

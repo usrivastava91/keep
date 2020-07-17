@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import "./NoteCard.scss";
 import { NewNote } from "../types";
 import { useSelector, useDispatch } from "react-redux";
-import { ARCHIVE_NOTE, PIN_NOTE } from "../store/actions";
+import { ARCHIVE_NOTE, PIN_NOTE, DELETE_NOTE } from "../store/actions";
 import { useHistory, useLocation } from "react-router-dom";
 interface Props {
   note: NewNote;
-  showNoteActions: boolean;
 }
 export const NoteCard: React.FC<Props> = (props: Props) => {
-  const { note, showNoteActions } = props;
+  const { note } = props;
   const { id, body, title, type } = note;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -33,16 +32,34 @@ export const NoteCard: React.FC<Props> = (props: Props) => {
       `note/${id}/${encodeURI(title)}/${encodeURI(body)}/${encodeURI(type)}`
     );
   };
-
+  const deleteNote = (e: any) => {
+    e.stopPropagation();
+    const deletedNote = { id, type };
+    dispatch({ type: DELETE_NOTE, payload: { deletedNote } });
+  };
   const summary = body != undefined ? body.substring(0, 50) + "..." : "";
   const validatedTitle = title != undefined ? title : "";
+  console.log(type);
   return (
     <div className="note-card" onClick={showNote}>
       <h4 className="title">{validatedTitle}</h4>
       <div className="body">{summary}</div>
-      <div className={showNoteActions ? "actions" : "display-none"}>
-        <button onClick={archiveNote}>archive</button>
-        <button onClick={pinNote}>pin</button>
+      <div className="actions">
+        <button
+          className={
+            type === "archivedNotes" ? "display-none" : "display-block"
+          }
+          onClick={archiveNote}
+        >
+          archive
+        </button>
+        <button
+          className={type === "pinnedNotes" ? "display-none" : "display-block"}
+          onClick={pinNote}
+        >
+          pin
+        </button>
+        <button onClick={deleteNote}> delete</button>
       </div>
     </div>
   );

@@ -3,22 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { NewNote } from "../types";
 import { NoteCard } from "./NoteCard";
 import "./NotesGrid.scss";
+import { CSSTransition } from "react-transition-group";
 interface Props {
   notes: NewNote[];
-  showNoteActions: boolean;
 }
 export const NotesGrid: React.FC<Props> = (props: Props) => {
-  const { notes, showNoteActions } = props;
+  const { notes } = props;
   return (
     <div className="notes-grid">
       {notes.map((note: NewNote) => {
         const { id } = note;
         return (
-          <NoteCard
-            showNoteActions={showNoteActions}
-            key={id}
-            note={note}
-          ></NoteCard>
+          <CSSTransition in={true} timeout={300} classNames="note-card" appear>
+            <NoteCard key={id} note={note}></NoteCard>
+          </CSSTransition>
         );
       })}
     </div>

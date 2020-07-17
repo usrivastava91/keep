@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import * as actions from "./actions";
-import { NewNote } from "../types";
+import { NewNote, SearchState } from "../types";
 const activeNoteState: NewNote[] = [];
 const activeNotes = (state = activeNoteState, action: any): NewNote[] => {
   const { type, payload } = action;
@@ -61,7 +61,7 @@ const pinnedNotes = (state = pinnedNotesState, action: any): NewNote[] => {
   }
 };
 
-const searchState: { showSearchResults: boolean; searchResults: NewNote[] } = {
+const searchState: SearchState = {
   showSearchResults: false,
   searchResults: [],
 };
@@ -70,14 +70,14 @@ const search = (state = searchState, action: any): any => {
   switch (type) {
     case actions.SEARCH_DATA_COLLATED: {
       const { allNotes, query } = payload;
-      const searchResult = allNotes.filter((note: NewNote) => {
+      const result = allNotes.filter((note: NewNote) => {
         return (
           note.body.toLowerCase().includes(query.toLowerCase()) ||
           note.title.toLowerCase().includes(query.toLowerCase())
         );
       });
       const newState = {
-        searchResults: [...searchResult],
+        searchResults: [...result],
         showSearchResults: state.showSearchResults,
       };
       return newState;
@@ -91,7 +91,19 @@ const search = (state = searchState, action: any): any => {
       return state;
   }
 };
-const appReducers = { activeNotes, archivedNotes, pinnedNotes, search };
+
+const util = (state: any = { showSideBar: true }, action: any) => {
+  const { type, payload } = action;
+  switch (type) {
+    case actions.SHOW_SIDE_BAR: {
+      const showSideBar = payload;
+      return { showSideBar };
+    }
+    default:
+      return state;
+  }
+};
+const appReducers = { activeNotes, archivedNotes, pinnedNotes, search, util };
 
 export const rootReducer = combineReducers({
   ...appReducers,

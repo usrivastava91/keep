@@ -24,7 +24,6 @@ export const ArchivedNotes: React.FC<Props> = () => {
   return (
     <div className="archived-notes">
       <NotesGrid
-        showNoteActions={false}
         notes={
           showSearchResults === true
             ? archivedNotesSearchResults

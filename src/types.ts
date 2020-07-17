@@ -9,3 +9,8 @@ export interface Action {
   type: string;
   payload: any;
 }
+
+export interface SearchState {
+  showSearchResults: boolean;
+  searchResults: NewNote[];
+}

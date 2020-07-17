@@ -1,7 +1,8 @@
 import React from "react";
 import "./SideBar.scss";
 import { useHistory } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { CSSTransition } from "react-transition-group";
 interface Props {}
 export const SideBar: React.FC<Props> = () => {
   const history = useHistory();
@@ -9,14 +10,25 @@ export const SideBar: React.FC<Props> = () => {
     const sectionSelected = e.target.getAttribute("data-section");
     history.push(sectionSelected);
   };
+  const sideBarVisibility = useSelector((state: any) => {
+    return state.util.showSideBar;
+  });
   return (
-    <div className="sidebar">
-      <div className="items" data-section="active" onClick={selectionMade}>
-        Active Notes
+    // <div className={sideBarVisibility === true ? "sidebar" : "display-none"}>
+    <CSSTransition
+      in={sideBarVisibility}
+      timeout={300}
+      classNames="sidebar"
+      appear
+    >
+      <div className="">
+        <div className="items" data-section="active" onClick={selectionMade}>
+          Active Notes
+        </div>
+        <div className="items" data-section="archived" onClick={selectionMade}>
+          Archived Notes
+        </div>
       </div>
-      <div className="items" data-section="archived" onClick={selectionMade}>
-        Archived Notes
-      </div>
-    </div>
+    </CSSTransition>
   );
 };

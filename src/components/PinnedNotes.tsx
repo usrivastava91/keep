@@ -26,7 +26,6 @@ export const PinnedNotes: React.FC<Props> = () => {
     <div className="pinned-notes">
       <div className="spacer">pinned notes</div>
       <NotesGrid
-        showNoteActions={false}
         notes={
           showSearchResults === true ? pinnedNotesSearchResults : pinnnedNotes
         }

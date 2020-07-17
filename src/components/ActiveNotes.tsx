@@ -36,7 +36,6 @@ export const ActiveNotes: React.FC<Props> = () => {
       <div className="grid-section">
         <PinnedNotes />
         <NotesGrid
-          showNoteActions={true}
           notes={
             showSearchResults === true ? activeNotesSearchResults : activeNotes
           }
