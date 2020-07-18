@@ -74,6 +74,7 @@ function* getActiveNotes(action: Action) {
   });
 
   const notes = yield promise;
+  debugger;
   yield put(actions.activeNotesRecieved(notes));
 }
 
@@ -88,6 +89,7 @@ function* archiveNote(action: Action) {
       .add(note)
       .then((id) => {
         db.table("activeNotes").delete(note.id);
+        db.table("pinnedNotes").delete(note.id);
         resolve(id);
       });
   });
@@ -95,7 +97,6 @@ function* archiveNote(action: Action) {
   //TODO: Figure out a way to remove the archived note from the activeNotes state. so wont have to make db call again
   //To rerender the active notes section on archiving a note
 
-  //TODO FIX ARCHIVE IN PINNED NOTE BUG
   yield put(actions.getPinnedNotes());
   yield put(actions.getActiveNotes());
 }
@@ -123,16 +124,18 @@ function* watchPinNote() {
 
 function* pinNote(action: Action) {
   const note = action.payload;
-
+  debugger;
   const promise = new Promise((resolve, reject) => {
     db.table("pinnedNotes")
       .add(note)
       .then((id) => {
         db.table("activeNotes").delete(note.id);
+        db.table("archivedNotes").delete(note.id);
         resolve(id);
       });
   });
   const pinnedNotes = yield promise;
+  yield put(actions.getArchivedNotes());
   yield put(actions.getActiveNotes()); //To rerender the active notes section on pinning a note
 }
 
