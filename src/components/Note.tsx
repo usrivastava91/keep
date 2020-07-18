@@ -54,7 +54,7 @@ export const Note: React.FC<Props> = (props: Props) => {
                 />
               </div>
               <button className="edit-note-button" type="submit">
-                Edit Note
+                Close
               </button>
             </form>
           )}

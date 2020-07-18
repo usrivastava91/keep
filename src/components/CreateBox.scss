@@ -7,7 +7,10 @@ form {
   padding: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   border-radius: 7px;
-
+  & > button {
+    margin-left: 45%;
+    margin-top: 5px;
+  }
   & > div {
     display: flex;
     flex-flow: row nowrap;
@@ -26,7 +29,7 @@ form {
       font-size: 1em;
       margin-left: 15px;
       border: 1px solid #ccc;
-      border-radius: 3px;
+      border-radius: 3px5;
     }
     & > div {
       margin-left: 16px;
@@ -38,12 +41,6 @@ form {
         }
       }
     }
-  }
-  & > .buttons {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    margin-top: 15px;
   }
 }
 

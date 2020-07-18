@@ -36,8 +36,18 @@ export const CreateBox: React.FC<Props> = () => {
         <Modal triggerName="new note" showModal={showModal} show={show}>
           <Form
             onSubmit={createNote}
-            render={({ handleSubmit }: any) => (
-              <form onSubmit={handleSubmit}>
+            render={({ handleSubmit, reset }: any) => (
+              <form
+                onSubmit={(event) => {
+                  const promise = handleSubmit(event);
+                  promise &&
+                    promise.then(() => {
+                      reset();
+                    });
+
+                  return promise;
+                }}
+              >
                 <div>
                   <Field
                     name="title"
@@ -56,7 +66,7 @@ export const CreateBox: React.FC<Props> = () => {
                   />
                 </div>
                 <button className="create-note-button" type="submit">
-                  Create Note
+                  Close
                 </button>
               </form>
             )}
