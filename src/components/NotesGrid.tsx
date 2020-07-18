@@ -14,7 +14,7 @@ export const NotesGrid: React.FC<Props> = (props: Props) => {
       {notes.map((note: NewNote) => {
         const { id } = note;
         return (
-          <CSSTransition in={true} timeout={300} classNames="note-card" appear>
+          <CSSTransition in={true} timeout={100} classNames="note-card" appear>
             <NoteCard key={id} note={note}></NoteCard>
           </CSSTransition>
         );

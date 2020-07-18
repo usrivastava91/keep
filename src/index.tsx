@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import "font-awesome/css/font-awesome.min.css";
 
 //Redux imports
 import { Provider } from "react-redux";

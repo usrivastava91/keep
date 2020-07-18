@@ -20,18 +20,19 @@ export const AppLayout: React.FC<Props> = (props: Props) => {
         <Header />
         <div className="container">
           {sideBarVisibility === true ? <SideBar /> : null}
-
-          <Switch>
-            <Redirect exact from="/" to="/active" />
-            {appRoutes.map((route: IRoute, index: Number) => (
-              <Route
-                key={route.path}
-                exact={true}
-                path={route.path}
-                component={route.component}
-              />
-            ))}
-          </Switch>
+          <div className="main">
+            <Switch>
+              <Redirect exact from="/" to="/active" />
+              {appRoutes.map((route: IRoute, index: Number) => (
+                <Route
+                  key={route.path}
+                  exact={true}
+                  path={route.path}
+                  component={route.component}
+                />
+              ))}
+            </Switch>
+          </div>
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ export const SideBar: React.FC<Props> = () => {
     // <div className={sideBarVisibility === true ? "sidebar" : "display-none"}>
     <CSSTransition
       in={sideBarVisibility}
-      timeout={300}
+      timeout={100}
       classNames="sidebar"
       appear
     >

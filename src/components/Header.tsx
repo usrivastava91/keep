@@ -2,10 +2,12 @@ import React from "react";
 import "./Header.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { SEARCH, SHOW_SEARCH_RESULTS, SHOW_SIDE_BAR } from "../store/actions";
+import { useLocation } from "react-router-dom";
 interface Props {}
 export const Header: React.FC<Props> = () => {
   const dispatch = useDispatch();
-
+  let location = useLocation();
+  const title = location.pathname.substr(1);
   const search = (e: any) => {
     dispatch({ type: SEARCH, payload: e.target.value });
     dispatch({ type: SHOW_SEARCH_RESULTS, payload: true });
@@ -27,11 +29,18 @@ export const Header: React.FC<Props> = () => {
   };
   return (
     <div className="header">
-      <button onClick={toggleSideBar}>
-        <i className="fas fa-bars"></i>
-      </button>
-      <input type="text" onChange={search} onBlur={cancelSearch} />
-      <div>{}</div>
+      <div className="title display-flex">
+        <i onClick={toggleSideBar} className="fa fa-bars toggle-sidebar"></i>
+        <h3>{title}</h3>
+      </div>
+      <input
+        className="search-bar"
+        placeholder="search..."
+        type="text"
+        onChange={search}
+        onBlur={cancelSearch}
+      />
+      <div></div>
     </div>
   );
 };

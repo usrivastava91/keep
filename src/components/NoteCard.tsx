@@ -45,21 +45,25 @@ export const NoteCard: React.FC<Props> = (props: Props) => {
       <h4 className="title">{validatedTitle}</h4>
       <div className="body">{summary}</div>
       <div className="actions">
-        <button
-          className={
-            type === "archivedNotes" ? "display-none" : "display-block"
-          }
+        <i
           onClick={archiveNote}
-        >
-          archive
-        </button>
-        <button
-          className={type === "pinnedNotes" ? "display-none" : "display-block"}
+          className={
+            type === "archivedNotes"
+              ? "display-none"
+              : "fa fa-archive cursor-pointer"
+          }
+        ></i>
+
+        <i
           onClick={pinNote}
-        >
-          pin
-        </button>
-        <button onClick={deleteNote}> delete</button>
+          className={
+            type === "pinnedNotes"
+              ? "display-none"
+              : "fa fa-thumb-tack cursor-pointer"
+          }
+        ></i>
+
+        <i onClick={deleteNote} className="fa fa-trash cursor-pointer"></i>
       </div>
     </div>
   );

@@ -32,8 +32,8 @@ export const CreateBox: React.FC<Props> = () => {
 
   return (
     <>
-      <CSSTransition in={show} timeout={400} classNames="sidebar">
-        <Modal triggerName="Write a note" showModal={showModal} show={show}>
+      <CSSTransition in={show} timeout={100} classNames="sidebar">
+        <Modal triggerName="new note" showModal={showModal} show={show}>
           <Form
             onSubmit={createNote}
             render={({ handleSubmit }: any) => (
@@ -52,7 +52,7 @@ export const CreateBox: React.FC<Props> = () => {
                     component="textarea"
                     rows={25}
                     type="text"
-                    placeholder="Title"
+                    placeholder="take a note..."
                   />
                 </div>
                 <button className="create-note-button" type="submit">

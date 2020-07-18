@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NotesGrid } from "./NotesGrid";
 import { GET_PINNED_NOTES } from "../store/actions";
 import { NewNote } from "../types";
+import "./PinnedNotes.scss";
 interface Props {}
 export const PinnedNotes: React.FC<Props> = () => {
   const dispatch = useDispatch();
@@ -23,8 +24,8 @@ export const PinnedNotes: React.FC<Props> = () => {
     return result.type === "pinnedNotes";
   });
   return (
-    <div className="pinned-notes">
-      <div className="spacer">pinned notes</div>
+    <div className={pinnnedNotes.length > 0 ? "pinned-notes" : "display-none"}>
+      <i className="fa fa-thumb-tack"></i>
       <NotesGrid
         notes={
           showSearchResults === true ? pinnedNotesSearchResults : pinnnedNotes

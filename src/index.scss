@@ -5,9 +5,7 @@ body {
   font-family: "Roboto Mono", monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  button {
-    font-family: "Montserrat", sans-serif;
-  }
+
   input {
     font-family: "Montserrat", sans-serif;
   }
@@ -16,4 +14,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+button {
+  color: #494949;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ffffff;
+  padding: 5px;
+  border: 2px solid #494949;
+  display: inline-block;
+  transition: all 0.4s ease 0s;
+  border-radius: 2px;
+  cursor: pointer;
+  &:hover {
+    color: #ffffff;
+    background: black;
+    border-color: black;
+    transition: all 0.4s ease 0s;
+  }
 }

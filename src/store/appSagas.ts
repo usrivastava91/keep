@@ -24,7 +24,6 @@ function* createNote(action: Action) {
         resolve(id);
       });
   });
-
   const id = yield promise;
 }
 
@@ -35,7 +34,14 @@ function* watchUpdateNote() {
 function* updateNote(action: Action) {
   const { updatedNote } = action.payload;
   const { id, type, body, title } = updatedNote;
-  db.table(type).update(id, { body, title, type });
+  const promise = new Promise((resolve, reject) => {
+    db.table(type)
+      .update(id, { body, title, type })
+      .then((id) => {
+        resolve(id);
+      });
+  });
+  const updatedId = yield promise;
 }
 
 function* watchDeleteNote() {
@@ -53,7 +59,6 @@ function* deleteNote(action: Action) {
         resolve(id);
       });
   });
-
   const deletedId = yield promise;
   if (type === "archivedNotes") yield put(actions.getArchivedNotes());
   else if (type === "activeNotes") yield put(actions.getActiveNotes());
@@ -74,7 +79,6 @@ function* getActiveNotes(action: Action) {
   });
 
   const notes = yield promise;
-  debugger;
   yield put(actions.activeNotesRecieved(notes));
 }
 
@@ -124,7 +128,6 @@ function* watchPinNote() {
 
 function* pinNote(action: Action) {
   const note = action.payload;
-  debugger;
   const promise = new Promise((resolve, reject) => {
     db.table("pinnedNotes")
       .add(note)
@@ -144,7 +147,6 @@ function* watchGetPinnedNotes() {
 }
 
 function* getPinnedNotes() {
-  debugger;
   const promise = new Promise((resolve, reject) => {
     db.table("pinnedNotes")
       .toArray()

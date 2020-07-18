@@ -16,9 +16,7 @@ export const Modal: React.FC<Props> = ({
   const overlayClass = show ? "overlay" : "";
   return (
     <div>
-      <button className="trigger-button" onClick={showModal}>
-        {triggerName}
-      </button>
+      <button onClick={showModal}>{triggerName}</button>
       <div className={conditionalShowHideClass + " " + overlayClass}>
         <section className="modal-main">{children}</section>
       </div>
