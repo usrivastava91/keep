@@ -23,10 +23,10 @@ export const SideBar: React.FC<Props> = () => {
     >
       <div className="">
         <div className="items" data-section="active" onClick={selectionMade}>
-          Active Notes
+          Active
         </div>
         <div className="items" data-section="archived" onClick={selectionMade}>
-          Archived Notes
+          Archived
         </div>
       </div>
     </CSSTransition>

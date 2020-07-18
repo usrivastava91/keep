@@ -8,6 +8,16 @@ body {
 
   input {
     font-family: "Montserrat", sans-serif;
+    border: 0px solid;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: none;
+  }
+
+  textarea {
+    border: 0px solid;
+    border-radius: 4px;
+    box-shadow: none;
   }
 }
 

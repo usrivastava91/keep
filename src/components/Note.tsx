@@ -11,6 +11,23 @@ export const Note: React.FC<Props> = (props: Props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener("keydown", cancelOnEscape, false);
+    return () => {
+      document.removeEventListener("keydown", cancelOnEscape, false);
+    };
+  }, []);
+
+  const cancelOnEscape = (e: any) => {
+    if (e.keyCode === 27) {
+      if (type === "archivedNotes") {
+        history.replace("/archived");
+      } else {
+        history.replace("/active");
+      }
+    }
+  };
   const hideModal = () => {
     setShow(false);
   };
