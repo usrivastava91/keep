@@ -22,7 +22,7 @@ export const AppLayout: React.FC<Props> = (props: Props) => {
           {sideBarVisibility === true ? <SideBar /> : null}
           <div className="main">
             <Switch>
-              <Redirect exact from="/keep" to="/active" />
+              <Redirect exact from="/" to="/active" />
               {appRoutes.map((route: IRoute, index: Number) => (
                 <Route
                   key={route.path}
