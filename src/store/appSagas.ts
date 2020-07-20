@@ -85,7 +85,6 @@ function* getActiveNotes(action: Action) {
 function* watchArchiveNote() {
   yield takeLatest(actions.ARCHIVE_NOTE, archiveNote);
 }
-//TODO FIGURE OUT WHY WRAPPING UNDER PROMISE ALLOWS YIELD LATER. READ ABOUT YIELD IN SAGA
 function* archiveNote(action: Action) {
   const note = action.payload;
   const promise = new Promise((resolve, reject) => {
@@ -100,7 +99,6 @@ function* archiveNote(action: Action) {
   const archivedNoteId = yield promise;
   //TODO: Figure out a way to remove the archived note from the activeNotes state. so wont have to make db call again
   //To rerender the active notes section on archiving a note
-
   yield put(actions.getPinnedNotes());
   yield put(actions.getActiveNotes());
 }

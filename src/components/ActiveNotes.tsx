@@ -10,9 +10,8 @@ interface Props {}
 export const ActiveNotes: React.FC<Props> = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("reloaded");
     dispatch({ type: "GET_ACTIVE_NOTES", payload: {} });
-    dispatch({ type: "GET_ARCHIVED_NOTES", payload: {} }); //Need to get the archived notes to have them available in the state for search( bad design regret :\ )
+    dispatch({ type: "GET_ARCHIVED_NOTES", payload: {} }); //Need to get the archived notes to have them available in the state for search functionality( bad design regret :\ )
   }, []);
 
   const activeNotes = useSelector((state: any) => {

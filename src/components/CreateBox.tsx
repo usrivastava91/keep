@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "../ui-components/Modal";
 import { Form, Field } from "react-final-form";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { CREATE_NOTE } from "../store/actions";
 import uuid from "../utils/uuid";
 import "./CreateBox.scss";
@@ -32,7 +32,7 @@ export const CreateBox: React.FC<Props> = () => {
 
   return (
     <>
-      <CSSTransition in={show} timeout={100} classNames="sidebar">
+      <CSSTransition in={show} timeout={100} classNames="modal">
         <Modal triggerName="new note" showModal={showModal} show={show}>
           <Form
             onSubmit={createNote}
@@ -44,7 +44,6 @@ export const CreateBox: React.FC<Props> = () => {
                     promise.then(() => {
                       reset();
                     });
-
                   return promise;
                 }}
               >

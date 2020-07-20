@@ -7,8 +7,6 @@ import { SideBar } from "./SideBar";
 import "./AppLayout.scss";
 import { useSelector } from "react-redux";
 
-import { CSSTransition } from "react-transition-group";
-
 interface Props {}
 export const AppLayout: React.FC<Props> = (props: Props) => {
   const sideBarVisibility = useSelector((state: any) => {
