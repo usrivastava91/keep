@@ -12,8 +12,6 @@ export const NoteCard: React.FC<Props> = (props: Props) => {
   const { id, body, title, type } = note;
   const dispatch = useDispatch();
   const history = useHistory();
-  // let location = useLocation();
-  // const type = location.pathname.substr(1);
 
   const archiveNote = (e: any) => {
     e.stopPropagation();

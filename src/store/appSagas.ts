@@ -1,18 +1,11 @@
-import {
-  takeEvery,
-  put,
-  takeLatest,
-  call,
-  select,
-  fork,
-} from "redux-saga/effects";
+import { takeEvery, put, select } from "redux-saga/effects";
 import { all } from "redux-saga/effects";
 import * as actions from "./actions";
 import db from "../utils/DBConfig";
 import { Action } from "../types";
 
 function* watchCreateNote() {
-  yield takeLatest(actions.CREATE_NOTE, createNote);
+  yield takeEvery(actions.CREATE_NOTE, createNote);
 }
 
 function* createNote(action: Action) {
@@ -28,7 +21,7 @@ function* createNote(action: Action) {
 }
 
 function* watchUpdateNote() {
-  yield takeLatest(actions.UPDATE_NOTE, updateNote);
+  yield takeEvery(actions.UPDATE_NOTE, updateNote);
 }
 
 function* updateNote(action: Action) {
@@ -45,7 +38,7 @@ function* updateNote(action: Action) {
 }
 
 function* watchDeleteNote() {
-  yield takeLatest(actions.DELETE_NOTE, deleteNote);
+  yield takeEvery(actions.DELETE_NOTE, deleteNote);
 }
 
 function* deleteNote(action: Action) {
@@ -83,7 +76,7 @@ function* getActiveNotes(action: Action) {
 }
 
 function* watchArchiveNote() {
-  yield takeLatest(actions.ARCHIVE_NOTE, archiveNote);
+  yield takeEvery(actions.ARCHIVE_NOTE, archiveNote);
 }
 function* archiveNote(action: Action) {
   const note = action.payload;
@@ -97,7 +90,6 @@ function* archiveNote(action: Action) {
       });
   });
   const archivedNoteId = yield promise;
-  //TODO: Figure out a way to remove the archived note from the activeNotes state. so wont have to make db call again
   //To rerender the active notes section on archiving a note
   yield put(actions.getPinnedNotes());
   yield put(actions.getActiveNotes());
@@ -121,7 +113,7 @@ function* getArchivedNotes(action: Action) {
 }
 
 function* watchPinNote() {
-  yield takeLatest(actions.PIN_NOTE, pinNote);
+  yield takeEvery(actions.PIN_NOTE, pinNote);
 }
 
 function* pinNote(action: Action) {
@@ -135,7 +127,7 @@ function* pinNote(action: Action) {
         resolve(id);
       });
   });
-  const pinnedNotes = yield promise;
+  const pinnedNoteId = yield promise;
   yield put(actions.getArchivedNotes());
   yield put(actions.getActiveNotes()); //To rerender the active notes section on pinning a note
 }
@@ -157,7 +149,7 @@ function* getPinnedNotes() {
 }
 
 function* watchSearch() {
-  yield takeLatest(actions.SEARCH, search);
+  yield takeEvery(actions.SEARCH, search);
 }
 
 function* search(action: Action) {
