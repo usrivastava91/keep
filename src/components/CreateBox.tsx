@@ -11,7 +11,8 @@ interface Props {}
 export const CreateBox: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const createNote = (values: any) => {
+  const createNote = (values: any, formAPI: any) => {
+    const { reset } = formAPI;
     const id = uuid();
     if (Object.keys(values).length === 0) {
       hideModal();
@@ -20,6 +21,9 @@ export const CreateBox: React.FC<Props> = () => {
       dispatch({ type: CREATE_NOTE, payload: { ...note } });
       hideModal();
     }
+    setTimeout(() => {
+      reset();
+    }, 0);
   };
 
   const hideModal = () => {

@@ -1,9 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./NoteCard.scss";
 import { NewNote } from "../types";
-import { useSelector, useDispatch } from "react-redux";
-import { ARCHIVE_NOTE, PIN_NOTE, DELETE_NOTE } from "../store/actions";
-import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  ARCHIVE_NOTE,
+  PIN_NOTE,
+  DELETE_NOTE,
+  ADD_NOTE_TO_ACTIVE,
+} from "../store/actions";
+import { useHistory } from "react-router-dom";
 interface Props {
   note: NewNote;
 }
@@ -35,9 +40,13 @@ export const NoteCard: React.FC<Props> = (props: Props) => {
     const deletedNote = { id, type };
     dispatch({ type: DELETE_NOTE, payload: { deletedNote } });
   };
-  const summary = body != undefined ? body.substring(0, 50) + "..." : "";
-  const validatedTitle = title != undefined ? title : "";
-  console.log(type);
+
+  const addToActive = (e: any) => {
+    e.stopPropagation();
+    dispatch({ type: ADD_NOTE_TO_ACTIVE, payload: { note } });
+  };
+  const summary = body != undefined ? body.substring(0, 20) + "..." : "";
+  const validatedTitle = title != undefined ? title.substring(0, 15) : "";
   return (
     <div className="note-card" onClick={showNote}>
       <h4 className="title">{validatedTitle}</h4>
@@ -60,7 +69,14 @@ export const NoteCard: React.FC<Props> = (props: Props) => {
               : "fa fa-thumb-tack cursor-pointer"
           }
         ></i>
-
+        <i
+          onClick={addToActive}
+          className={
+            type === "activeNotes"
+              ? "display-none"
+              : "fa fa-bolt cursor-pointer"
+          }
+        ></i>
         <i onClick={deleteNote} className="fa fa-trash cursor-pointer"></i>
       </div>
     </div>

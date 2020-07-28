@@ -163,6 +163,28 @@ function* search(action: Action) {
   yield put(actions.searchDataCollated(allNotes, query));
 }
 
+function* watchAddNoteToActive() {
+  yield takeEvery(actions.ADD_NOTE_TO_ACTIVE, addNoteToActive);
+}
+
+function* addNoteToActive(action: Action) {
+  const { note } = action.payload;
+  const { type } = note;
+  const noteToAdd = { ...note, type: "activeNotes" };
+  const promise = new Promise((resolve, reject) => {
+    db.table("activeNotes")
+      .add(noteToAdd)
+      .then((id) => {
+        db.table(type).delete(note.id);
+        resolve(id);
+      });
+  });
+  const id = yield promise;
+  yield put(actions.getArchivedNotes());
+  yield put(actions.getPinnedNotes());
+  yield put(actions.getActiveNotes());
+}
+
 const appSagas = [
   watchCreateNote(),
   watchGetActiveNotes(),
@@ -173,6 +195,7 @@ const appSagas = [
   watchGetPinnedNotes(),
   watchUpdateNote(),
   watchSearch(),
+  watchAddNoteToActive(),
 ];
 
 export function* rootSaga() {

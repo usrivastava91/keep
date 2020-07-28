@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import { NewNote } from "../types";
 import { NoteCard } from "./NoteCard";
 import "./NotesGrid.scss";

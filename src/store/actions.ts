@@ -14,7 +14,7 @@ export const DELETE_NOTE = "DELETE_NOTE";
 export const SEARCH = "SEARCH";
 export const SEARCH_DATA_COLLATED = "SEARCH_DATA_COLLATED";
 export const SHOW_SEARCH_RESULTS = "SHOW_SEARCH_RESULTS";
-
+export const ADD_NOTE_TO_ACTIVE = "ADD_NOTE_TO_ACTIVE";
 export const SHOW_SIDE_BAR = "SHOW_SIDE_BAR";
 interface CreateNote {
   type: typeof CREATE_NOTE;
@@ -115,6 +115,14 @@ interface ShowSideBar {
     showSideBar: boolean;
   };
 }
+
+interface AddNoteToActive {
+  type: typeof ADD_NOTE_TO_ACTIVE;
+  payload: {
+    note: NewNote;
+  };
+}
+
 export type Actions =
   | CreateNote
   | UpdateNote
@@ -130,7 +138,8 @@ export type Actions =
   | SearchDataCollated
   | ShowSearchResults
   | ShowSideBar
-  | DeleteNote;
+  | DeleteNote
+  | AddNoteToActive;
 
 export function createNote(newNote: NewNote): Actions {
   return {
@@ -146,6 +155,15 @@ export function updateNote(updatedNote: NewNote): Actions {
     type: UPDATE_NOTE,
     payload: {
       updatedNote,
+    },
+  };
+}
+
+export function addNoteToActive(note: NewNote): Actions {
+  return {
+    type: ADD_NOTE_TO_ACTIVE,
+    payload: {
+      note,
     },
   };
 }
