@@ -70,7 +70,6 @@ function* getActiveNotes(action: Action) {
         resolve(notes);
       });
   });
-
   const notes = yield promise;
   yield put(actions.activeNotesRecieved(notes));
 }
