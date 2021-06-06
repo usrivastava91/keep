@@ -1,3 +1,3 @@
 # keep
 
-A functional clone of google keep in react
+A functional clone of google keep in react.
